@@ -38,20 +38,20 @@ void Soldier::Shoot()
 	if (state == idle)
 		state = shoot;
 	if (state == walk)
-		state == walkShoot;
+		state = walkShoot;
 	weapon.Shoot(rotation, position);
 }
 
 void Soldier::Calculate()
 {
-	state = idle;
-	Time();
-	sprite.setPosition(position);//TODO
 	sprite.setTextureRect(animations[state].GetRect());
+	Object::Calculate();
+	Object::Resize();
 	sprite.setOrigin(sprite.getLocalBounds().width/2, sprite.getLocalBounds().height/2);
+	Time();
 }
 
-Soldier::Soldier(Animation defaultAnimation, Weapon weapon_, float speed_) : weapon(weapon_)
+Soldier::Soldier(Animation defaultAnimation, Weapon weapon_, float speed_, Field& field, Vector2f size) : weapon(weapon_), Object(field, size)
 {
 	speed = speed_;
 	list = defaultAnimation.GetSpriteList();
@@ -62,7 +62,7 @@ Soldier::Soldier(Animation defaultAnimation, Weapon weapon_, float speed_) : wea
 	animations[3] = defaultAnimation;
 }
 
-Soldier::Soldier(Animation idle_, Animation walk_, Animation shoot_, Animation walkShoot_, Weapon weapon_, float speed_) : weapon(weapon_)
+Soldier::Soldier(Animation idle_, Animation walk_, Animation shoot_, Animation walkShoot_, Weapon weapon_, float speed_, Field& field, Vector2f size) : weapon(weapon_), Object(field, size)
 {
 	speed = speed_;
 	list = idle_.GetSpriteList();
@@ -75,6 +75,7 @@ Soldier::Soldier(Animation idle_, Animation walk_, Animation shoot_, Animation w
 
 Sprite Soldier::GetSprite()
 {
+	Calculate();
 	return sprite;
 }
 

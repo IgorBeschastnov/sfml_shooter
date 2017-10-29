@@ -6,11 +6,11 @@ class Player :
 private:
 	Vector2f getMoveDirection();
 	Vector2f getLookDirection();
-	RenderWindow* window;
-public:
+	const RenderWindow* window;
 	void Calculate() override;
-	Player(Animation, Weapon, float, RenderWindow&);
-	Player(Animation, Animation, Animation, Animation, Weapon, float, RenderWindow&);
+public:
+	Player(Animation, Weapon, float, Field&, Vector2f);
+	Player(Animation, Animation, Animation, Animation, Weapon, float, Field&, Vector2f);
 	~Player();
 };
 
