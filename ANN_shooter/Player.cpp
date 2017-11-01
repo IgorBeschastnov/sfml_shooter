@@ -17,7 +17,8 @@ Vector2f Player::getMoveDirection()
 
 Vector2f Player::getLookDirection()
 {
-	Vector2f direction = position;
+	float scale = field->GetScale();
+	Vector2f direction = (position-field->GetCameraPosition()) / scale;
 	Vector2i mousePos = Mouse::getPosition(*window);
 	direction.x = mousePos.x - direction.x;
 	direction.y = mousePos.y - direction.y;
@@ -39,11 +40,13 @@ void Player::Calculate()
 
 Player::Player(Animation defaultAnimation, Weapon weapon_, float speed_, Field& field, Vector2f size) : Soldier(defaultAnimation, weapon_, speed_, field, size)
 {
+	type = player;
 	window = field.GetWindow();
 }
 
 Player::Player(Animation idle_, Animation walk_, Animation shoot_, Animation walkShoot_, Weapon weapon_, float speed_, Field& field, Vector2f size) : Soldier(idle_, walk_, shoot_, walkShoot_, weapon_, speed_, field, size)
 {
+	type = player;
 	window = field.GetWindow();
 }
 

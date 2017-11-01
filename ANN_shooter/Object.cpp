@@ -3,9 +3,7 @@
 void Object::Calculate()
 {
 	float scale = field->GetScale();
-	auto size = field->GetWindow()->getSize();
-	std::cout << position.x << "" << position.y << std::endl;
-	sprite.setPosition(position/scale);
+	sprite.setPosition(field->WorldToScreenPoint(position));
 }
 
 Object::Object(Field & origin, Vector2f size_)
@@ -21,6 +19,11 @@ Object::~Object()
 {
 }
 
+Vector2f Object::GetPosition()
+{
+	return position;
+}
+
 void Object::Resize()
 {
 	float scale = field->GetScale();
@@ -30,6 +33,20 @@ void Object::Resize()
 //FIFNISHING FIELD CLASS
 void Field::HandleObjects()
 {
+	if (clearOutOfBounds)//TODO part of image visible
+	{
+		for (auto obj = objects.begin(); obj != objects.end();)
+			if (!displayedRect.contains((*obj)->GetPosition()))
+			{
+				delete(*obj);
+				obj = objects.erase(obj);
+			}
+			else obj++;
+	}
 	for (auto obj : objects)
-		window->draw(obj->GetSprite());
+	{
+		Sprite toDisplay = obj->GetSprite();
+		toDisplay.setPosition(toDisplay.getPosition() - WorldToScreenPoint(cameraPosition));
+		window->draw(toDisplay);
+	}
 }

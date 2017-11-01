@@ -1,9 +1,5 @@
 #include "Player.h"
 
-static const int FPS_LOCK = 60;
-static const int SCREEN_WIDTH = 600;
-static const int SCREEN_HEIGHT = 800;
-
 int main()
 {
 	Texture baseAtlas;
@@ -17,20 +13,16 @@ int main()
 	Animation walkAnim = Animation(&baseList, 1, 8);
 	Animation walkShootAnim = Animation(&baseList, 2, 8);
 	Animation shootAnim = Animation(&baseList, 3, 2);
-	Weapon baseWeapon = Weapon(Projectile(bulletAnim), 5, 1000, 4);
 	RenderWindow mainWindow(VideoMode(SCREEN_HEIGHT, SCREEN_WIDTH, 32), "main");
 	mainWindow.setFramerateLimit(FPS_LOCK);
-	Field mainField(0.01, mainWindow);
+	Field mainField(0.01, mainWindow, Vector2f(0,0),true);
+	Weapon baseWeapon = Weapon(Projectile(bulletAnim, Vector2f(0.25,0.25)), 5, 10, 4);
 	Player player = Player(idleAnim, walkAnim, shootAnim, walkShootAnim, baseWeapon, 3, mainField, Vector2f( 1,1 ));
-
+	Soldier sold = Soldier(idleAnim, walkAnim, shootAnim, walkShootAnim, baseWeapon, 3, mainField, Vector2f(1, 1));
 	while (mainWindow.isOpen())
 	{
 		mainWindow.clear();
-		for (auto proj = enemyProjectiles.begin(); proj != enemyProjectiles.end(); proj++)
-		{
-			proj->Calculate();
-			mainWindow.draw(proj->GetSprite());
-		}
+		sold.Move(Vector2f(1, 0));
 		mainField.HandleObjects();
 		mainWindow.display();
 	}

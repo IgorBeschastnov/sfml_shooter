@@ -3,18 +3,11 @@
 #include "Weapon.h"
 #include "Object.h"
 
-enum StateSoldier
-{
-	idle = 0,
-	walk,
-	shoot,
-	walkShoot
-};
-
 class Soldier :
 	public Object
 {
 protected:
+	SoldierType type;
 	Animation animations[4];
 	Weapon weapon;
 	StateSoldier state;
@@ -27,6 +20,7 @@ public:
 	void LookAt(Vector2f);
 	void Move(Vector2f);
 	void Shoot();
+	SoldierType GetType();
 	virtual void Calculate();
 	Soldier(Animation, Weapon, float, Field&, Vector2f);
 	Soldier(Animation, Animation, Animation, Animation, Weapon, float, Field&, Vector2f);

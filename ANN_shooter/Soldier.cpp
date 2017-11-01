@@ -42,6 +42,11 @@ void Soldier::Shoot()
 	weapon.Shoot(rotation, position);
 }
 
+SoldierType Soldier::GetType()
+{
+	return type;
+}
+
 void Soldier::Calculate()
 {
 	sprite.setTextureRect(animations[state].GetRect());
@@ -51,8 +56,9 @@ void Soldier::Calculate()
 	Time();
 }
 
-Soldier::Soldier(Animation defaultAnimation, Weapon weapon_, float speed_, Field& field, Vector2f size) : weapon(weapon_), Object(field, size)
+Soldier::Soldier(Animation defaultAnimation, Weapon weapon_, float speed_, Field& field_, Vector2f size) : Object(field_, size), weapon(weapon_,&field, this)
 {
+	type = enemy;
 	speed = speed_;
 	list = defaultAnimation.GetSpriteList();
 	sprite.setTexture(list->atlas);
@@ -62,8 +68,9 @@ Soldier::Soldier(Animation defaultAnimation, Weapon weapon_, float speed_, Field
 	animations[3] = defaultAnimation;
 }
 
-Soldier::Soldier(Animation idle_, Animation walk_, Animation shoot_, Animation walkShoot_, Weapon weapon_, float speed_, Field& field, Vector2f size) : weapon(weapon_), Object(field, size)
+Soldier::Soldier(Animation idle_, Animation walk_, Animation shoot_, Animation walkShoot_, Weapon weapon_, float speed_, Field& field_, Vector2f size) : Object(field_, size), weapon(weapon_, &field, this)
 {
+	type = enemy;
 	speed = speed_;
 	list = idle_.GetSpriteList();
 	sprite.setTexture(list->atlas);
@@ -82,4 +89,18 @@ Sprite Soldier::GetSprite()
 
 Soldier::~Soldier()
 {
+}
+
+void Weapon::Shoot(Vector2f direction, Vector2f position)
+{
+	if (*field != nullptr)
+	{
+		if (CLOCK.getElapsedTime().asSeconds() - lastTime > (1 / shootSpeed))
+		{
+			Projectile* prj = new Projectile(projectile, **field);
+			globalProjectiles[holder->GetType()].push_back(prj);
+			globalProjectiles[holder->GetType()].back()->Shoot(direction, position);
+			lastTime = CLOCK.getElapsedTime().asSeconds();
+		}
+	}
 }

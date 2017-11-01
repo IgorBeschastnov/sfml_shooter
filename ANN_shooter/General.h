@@ -1,11 +1,19 @@
 #pragma once
-#include <list>
-#include <vector>
-#include <algorithm>
-#include "Projectile.h"
 #include "VectorOperations.h"
+#include "WorldConstants.h"
+#include "Projectile.h"
+enum SoldierType
+{
+	player = 0,
+	enemy,
+	typesNumber
+};
 
-extern std::list<Projectile> enemyProjectiles;
-extern std::list<Projectile> playerProjectiles;
-//static std::list<Enemy> enemies;
-//static std::list<Effect> effects;
+enum StateSoldier
+{
+	idle = 0,
+	walk,
+	shoot,
+	walkShoot
+};
+extern std::vector<std::list<Projectile*>> globalProjectiles;

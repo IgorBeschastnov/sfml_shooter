@@ -1,15 +1,5 @@
 #include "Weapon.h"
 
-void Weapon::Shoot(Vector2f direction, Vector2f position)
-{
-	if (CLOCK.getElapsedTime().asSeconds() - lastTime > (1/shootSpeed))
-	{
-		enemyProjectiles.emplace_back(projectile);
-		enemyProjectiles.back().Shoot(direction, position);
-		lastTime = CLOCK.getElapsedTime().asSeconds();
-	}
-}
-
 Weapon::Weapon(Projectile projectile_, int damage_, float projectileSpeed_, float shootSpeed_) : projectile(projectile_)
 {
 	lastTime = CLOCK.getElapsedTime().asSeconds();
@@ -18,6 +8,19 @@ Weapon::Weapon(Projectile projectile_, int damage_, float projectileSpeed_, floa
 	shootSpeed = shootSpeed_;
 	projectile.damage = damage;
 	projectile.speed = projectileSpeed;
+	field = nullptr;
+}
+
+Weapon::Weapon(const Weapon& weapon, Field** field_, Soldier* holder_) : projectile(weapon.projectile)
+{
+	holder = holder_;
+	lastTime = CLOCK.getElapsedTime().asSeconds();
+	damage = weapon.damage;
+	projectileSpeed = weapon.projectileSpeed;
+	shootSpeed = weapon.shootSpeed;
+	projectile.damage = damage;
+	projectile.speed = projectileSpeed;
+	field = field_;
 }
 
 

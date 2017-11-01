@@ -1,11 +1,10 @@
 #pragma once
-#include "General.h"
+#include "WorldConstants.h"
 #include "Field.h"
 class Object
 {
-private:
-	Field* field;
 protected:
+	Field* field;
 	Sprite sprite;
 	Vector2f size;
 	Vector2f position;
@@ -13,9 +12,10 @@ protected:
 	virtual void Calculate();
 
 	Object(Field&, Vector2f);
-	~Object();
 public:
+	Vector2f GetPosition();
 	virtual Sprite GetSprite() = 0;
 	void Resize();
+	virtual ~Object();
 };
 
