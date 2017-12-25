@@ -122,7 +122,9 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="General.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Neuron.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Perceptor.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Soldier.cpp" />
@@ -132,7 +134,9 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Field.h" />
+    <ClInclude Include="Neuron.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Perceptor.h" />
     <ClInclude Include="WorldConstants.h" />
     <ClInclude Include="General.h" />
     <ClInclude Include="Player.h" />

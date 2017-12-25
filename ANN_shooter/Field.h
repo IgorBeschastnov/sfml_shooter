@@ -19,6 +19,7 @@ public:
 	void HandleObjects();
 	bool AddObject(Object*);
 	float GetScale() const;
+	void RemoveObject(Object*);
 	Vector2f GetCameraPosition();
 	void SetCameraPosition(Vector2f);
 	Vector2f WorldToScreenPoint(Vector2f);

@@ -1,4 +1,5 @@
 #include "Object.h"
+#include <algorithm>
 
 void Object::Calculate()
 {
@@ -8,6 +9,7 @@ void Object::Calculate()
 
 Object::Object(Field & origin, Vector2f size_)
 {
+	that = this;
 	size = size_;
 	field = &origin;
 	field->AddObject(this);
@@ -22,6 +24,11 @@ Object::~Object()
 Vector2f Object::GetPosition()
 {
 	return position;
+}
+
+Vector2f Object::GetRotation()
+{
+	return rotation;
 }
 
 void Object::Resize()
@@ -49,4 +56,12 @@ void Field::HandleObjects()
 		toDisplay.setPosition(toDisplay.getPosition() - WorldToScreenPoint(cameraPosition));
 		window->draw(toDisplay);
 	}
+}
+
+
+void Field::RemoveObject(Object * ptr)
+{
+	auto itr = std::find(objects.begin(), objects.end(), ptr);
+	if (itr != objects.end())
+		objects.erase(itr);
 }

@@ -2,8 +2,8 @@
 
 void Soldier::LookAt(Vector2f lookDirection)
 {
-	rotation = lookDirection;
-	sprite.setRotation(VectorOperations::VectorToRotation(lookDirection));
+	rotation = lookDirection - position;
+	sprite.setRotation(VectorOperations::VectorToRotation(lookDirection - position));
 }
 
 void Soldier::Move(Vector2f direction)
@@ -20,7 +20,8 @@ void Soldier::Move(Vector2f direction)
 	Vector2f bias = direction*deltaTime;
 	//modifying position
 	position += bias;
-	//DEBUG LINE std::cout << sqrt(bias.x*bias.x + bias.y*bias.y) << std::endl;
+	//DEBUG
+	std::cout << position.x << " " << position.y << std::endl;
 }
 
 void Soldier::Time()
@@ -58,6 +59,7 @@ void Soldier::Calculate()
 
 Soldier::Soldier(Animation defaultAnimation, Weapon weapon_, float speed_, Field& field_, Vector2f size) : Object(field_, size), weapon(weapon_,&field, this)
 {
+	that = this;
 	type = enemy;
 	speed = speed_;
 	list = defaultAnimation.GetSpriteList();
@@ -70,6 +72,7 @@ Soldier::Soldier(Animation defaultAnimation, Weapon weapon_, float speed_, Field
 
 Soldier::Soldier(Animation idle_, Animation walk_, Animation shoot_, Animation walkShoot_, Weapon weapon_, float speed_, Field& field_, Vector2f size) : Object(field_, size), weapon(weapon_, &field, this)
 {
+	that = this;
 	type = enemy;
 	speed = speed_;
 	list = idle_.GetSpriteList();

@@ -4,6 +4,7 @@
 class Object
 {
 protected:
+	Object* that;
 	Field* field;
 	Sprite sprite;
 	Vector2f size;
@@ -14,6 +15,7 @@ protected:
 	Object(Field&, Vector2f);
 public:
 	Vector2f GetPosition();
+	Vector2f GetRotation();
 	virtual Sprite GetSprite() = 0;
 	void Resize();
 	virtual ~Object();

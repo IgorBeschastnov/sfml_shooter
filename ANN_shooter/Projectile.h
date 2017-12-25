@@ -6,6 +6,7 @@
 class Projectile :
 	public Object
 {
+	friend class Perceptor;//DEBUG
 	friend class Weapon;
 protected:
 	Animation animation;

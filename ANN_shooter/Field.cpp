@@ -1,6 +1,5 @@
 #include "Field.h"
 
-
 Field::Field(float scale_, RenderWindow& window_, Vector2f cameraPosition_, bool clearOutOfBounds_, Texture* background_, Vector2f backSize_)
 {
 	window = &window_;

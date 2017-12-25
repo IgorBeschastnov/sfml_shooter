@@ -16,4 +16,5 @@ enum StateSoldier
 	shoot,
 	walkShoot
 };
+
 extern std::vector<std::list<Projectile*>> globalProjectiles;
