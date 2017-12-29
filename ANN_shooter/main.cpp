@@ -22,11 +22,17 @@ int main()
 	Player player = Player(idleAnim, walkAnim, shootAnim, walkShootAnim, playerWeapon, 5, mainField, Vector2f(1, 1));
 	while (mainWindow.isOpen())
 	{
+		/*  ялнрпх
+		        ярпекъи  */
 		ann.LookAt(player.GetPosition());
 		ann.Shoot();
 		if (globalProjectiles[0].size() != 0)
 		{
-			ann.Move(ann.Process());
+			/*  дслни
+			        саецюи  */
+			auto dir = ann.Process();
+			//std::cout << dir.x << " " << dir.y << std::endl;
+			ann.Move(dir);
 			ann.Calculate();
 		}
 		//std::cout <<  ann.GetPosition().x << " " << ann.GetPosition().y << std::endl;

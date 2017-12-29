@@ -39,17 +39,28 @@ Vector2f Perceptor::Process()
 		}
 		Restart();
 	}
-	std::cout << aliveTime << std::endl;
+	//std::cout << aliveTime << std::endl;
 	//(*globalProjectiles[0].begin())->rotation = position - (*globalProjectiles[0].begin())->GetPosition();
 	//std::cout << dist << std::endl;
 	std::vector<Vector2f> toDodge;
 	auto itr = globalProjectiles[0].begin();
 	for (int i = 0; i < NEURONS_PER_TASK; i++)
 	{
+	again:
 		if (itr != globalProjectiles[0].end())
 		{
-			toDodge.push_back((*itr)->GetPosition());
-			itr++;
+			//std::cout << VectorOperations::AngleBetweenVectors((*itr)->GetRotation(), position - (*itr)->GetPosition()) << std::endl;
+			if (VectorOperations::AngleBetweenVectors((*itr)->GetRotation(), position - (*itr)->GetPosition()) < 90)
+			{
+				//std::cout << "do" << std::endl;
+				toDodge.push_back((*itr)->GetRotation());
+				itr++;
+			}
+			else
+			{
+				itr++;
+				goto again;
+			}
 		}
 		else break;
 	}
@@ -67,7 +78,7 @@ Vector2f Perceptor::Process()
 		//std::cout << result.x << " " << result.y << std::endl;
 		return result;
 	}
-	else return Vector2f(0.1, 0.1);
+	else return Vector2f(0,0);
 }
 
 Perceptor::Perceptor(Animation idle_, Animation walk_, Animation shoot_, Animation walkShoot_, Weapon weapon_, float speed_, Field& field_, Vector2f size) :

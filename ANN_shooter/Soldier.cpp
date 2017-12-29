@@ -8,6 +8,8 @@ void Soldier::LookAt(Vector2f lookDirection)
 
 void Soldier::Move(Vector2f direction)
 {
+	if (direction == Vector2f(0, 0))
+		return;
 	direction = VectorOperations::ReductToLength(direction, speed);
 	//getting delta time
 	float deltaTime = CLOCK.getElapsedTime().asSeconds() - lastTime;
@@ -21,7 +23,7 @@ void Soldier::Move(Vector2f direction)
 	//modifying position
 	position += bias;
 	//DEBUG
-	std::cout << position.x << " " << position.y << std::endl;
+	//std::cout << position.x << " " << position.y << std::endl;
 }
 
 void Soldier::Time()

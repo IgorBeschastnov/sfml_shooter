@@ -42,10 +42,14 @@ float VectorOperations::GetLength(Vector2f vector)
 
 float VectorOperations::AngleBetweenVectors(Vector2f f, Vector2f s)
 {
-	float sc = f.x*f.x + s.x*s.y;
-	float sq = sqrt(f.x*f.x + f.y*f.y)*sqrt(s.x*s.x + s.y*s.y);
-	float cosAng = sc / sq;
-	return acos(cosAng) * 180 / (3.14);
+	float x1 = f.x;
+	float y1 = f.y;
+	float x2 = s.x;
+	float y2 = s.y;
+	float t = (x1*x2 + y1*y2) / (sqrt((double)x1*x1 + y1*y1)*sqrt((double)x2*x2 + y2*y2));
+	if (t<-1) t = -1;
+	else if (t > 1) t = 1;
+	return acos(t) * 180 / (3.14);
 }
 
 float VectorOperations::Distance(Vector2f f, Vector2f s)

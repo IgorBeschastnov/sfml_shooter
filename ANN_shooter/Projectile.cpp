@@ -55,7 +55,7 @@ Projectile::~Projectile()
 	}
 	if (i != SoldierType::typesNumber)
 	{
-		std::cout << "Deleted" << std::endl;
+		//std::cout << "Deleted" << std::endl;
 		globalProjectiles[i].erase(pos);
 	}
 }
