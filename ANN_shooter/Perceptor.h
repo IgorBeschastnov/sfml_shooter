@@ -7,15 +7,16 @@ class Perceptor :
 	public Soldier
 {
 	const int NEURONS_PER_TASK = 7;
-	float multAngle = 0;//TODO
-	float multDist = 1;
+	float multAngle = 15;
+	float multDist = 0.5;
+	std::pair<int, int> multAngleBound = std::pair<int, int>(1, 30);
+	std::pair<int, int> multDistBound = std::pair<int, int>(0, 1);
 	float aliveTime;
 	float lastTime;
 	std::vector<DodgeNeuron> dodge;
-	Vector2f dodgeSummator(std::vector<std::pair<Vector2f, float>>);
+	Vector2f dodgeSummator(std::vector<std::tuple<Vector2f, float, float>>);
 	//std::vector <Neuron<float>> player;
 	void Restart();
-	friend void Evolve(Perceptor& ann);
 public:
 	Vector2f Process();
 	Perceptor(Animation, Animation, Animation, Animation, Weapon, float, Field&, Vector2f);
